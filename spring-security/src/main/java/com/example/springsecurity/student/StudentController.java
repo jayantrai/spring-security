@@ -7,13 +7,12 @@ import java.util.List;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.springsecurity.model.Student;
 
 @RestController
-@RequestMapping(method=RequestMethod.GET, value="/api/v1/students")
+@RequestMapping("/api/v1/students")
 public class StudentController {
 	
 	
@@ -29,5 +28,4 @@ public class StudentController {
 				.findFirst()
 				.orElseThrow(() -> new IllegalStateException("Student " + studentId + " does not exist"));
 	}
-	
 }
