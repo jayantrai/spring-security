@@ -25,7 +25,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 	
 
-
+	// overriding parent super class using http configure 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http 	.authorizeRequests()
@@ -34,7 +34,9 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 				.anyRequest()
 				.authenticated()
 				.and()
-				.httpBasic();
+				.httpBasic(); // it means basic auth
+		
+		
 	}
 
 
@@ -48,8 +50,16 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 			.roles("STUDENT") // Role_Student
 			.build();
 		
-		return new InMemoryUserDetailsManager(raijayantUser);
+		UserDetails jirelKalpanaUser =  User.builder()
+			.username("jirelkalpana")
+			.password(passwordEncoder.encode("123"))
+			.roles(ApplicationUserRole.ADMIN.name()) // role admin
+			.build();
+		
+		return new InMemoryUserDetailsManager(
+				raijayantUser, 
+				jirelKalpanaUser
+				);
 	}
-	
 	
 }
