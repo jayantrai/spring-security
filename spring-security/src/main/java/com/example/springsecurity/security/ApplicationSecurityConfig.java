@@ -13,6 +13,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
 
+
+
 @Configuration
 @EnableWebSecurity
 public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
@@ -31,6 +33,7 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 		http 	.authorizeRequests()
 				.antMatchers("/", "index", "/css/*", "/js/*")
 				.permitAll()
+				.antMatchers("/api/**").hasRole(ApplicationUserRole.STUDENT.name())
 				.anyRequest()
 				.authenticated()
 				.and()
