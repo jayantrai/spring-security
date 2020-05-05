@@ -3,6 +3,7 @@ package com.example.springsecurity.student;
 import java.util.Arrays;
 import java.util.List;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,6 +26,7 @@ public class StudentManagementController {
 			);
 	
 	@GetMapping
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_ADMINTRAINEE')")
 	public List<Student> getAllStudents() {
 		System.out.println("getAllStudents");
 		return STUDENTS;
@@ -32,6 +34,7 @@ public class StudentManagementController {
 	
 	
 	@PostMapping
+	@PreAuthorize("hasAuthority('student:write')")
 	public void registerNewStudent(Student student) {
 		System.out.println("registerNewStudent");
 		System.out.println(student);
@@ -39,6 +42,7 @@ public class StudentManagementController {
 	
 	
 	@DeleteMapping(path = "{studentId}")
+	@PreAuthorize("hasAuthority('student:write')")
 	public void deleteStudent(@PathVariable("studentId") Integer studentId) {
 		System.out.println("deleteStudent");
 		System.out.println(studentId);
@@ -46,6 +50,7 @@ public class StudentManagementController {
 	
 	
 	@PutMapping(path = "{studentId}")
+	@PreAuthorize("hasAuthority('student:write')")
 	public void updateStudent(@PathVariable("studentId") @RequestBody Integer studentId, Student student) {
 		System.out.println("updateStudent");
 		System.out.println(String.format("%s %s", student, studentId));
