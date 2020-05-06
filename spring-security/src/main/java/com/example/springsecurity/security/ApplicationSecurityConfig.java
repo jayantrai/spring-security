@@ -13,6 +13,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+
 import com.example.springsecurity.model.*;
 import com.example.springsecurity.student.*;
 
@@ -36,7 +38,9 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http 	
-				.csrf().disable() // todo 
+//				.csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+//				.and()
+				.csrf().disable()
 				.authorizeRequests()
 				.antMatchers("/", "index", "/css/*", "/js/*")
 				.permitAll()

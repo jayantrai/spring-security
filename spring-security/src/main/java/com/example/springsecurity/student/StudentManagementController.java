@@ -56,6 +56,4 @@ public class StudentManagementController {
 		System.out.println(String.format("%s %s", student, studentId));
 	}
 	
-	
-	
 }
