@@ -53,7 +53,13 @@
 		    <artifactId>guava</artifactId>
 		    <version>28.1-jre</version>
 		</dependency>
+		
+		<!-- https://mvnrepository.com/artifact/com.google.guava/guava -->
 
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-thymeleaf</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>

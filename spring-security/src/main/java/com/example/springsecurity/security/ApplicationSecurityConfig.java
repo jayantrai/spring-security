@@ -53,7 +53,11 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 				.authenticated()
 				.and()
 //				.httpBasic(); it means basic auth
-				.formLogin();
+				.formLogin()
+				.loginPage("/login").permitAll()
+				.defaultSuccessUrl("/courses", true)
+				.and()
+				.rememberMe(); // defaults to 2 weeks
 		
 		
 	}
