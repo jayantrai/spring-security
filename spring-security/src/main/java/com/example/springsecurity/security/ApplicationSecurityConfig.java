@@ -5,12 +5,14 @@ import java.util.concurrent.TimeUnit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -20,6 +22,7 @@ import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import com.example.springsecurity.auth.ApplicationUserService;
+import com.example.springsecurity.jwt.JwtUsernameAndPasswordAuthenticationFilter;
 import com.example.springsecurity.model.*;
 import com.example.springsecurity.student.*;
 
@@ -48,6 +51,11 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 //				.csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
 //				.and()
 				.csrf().disable()
+				// to create stateless session
+				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+				.and()
+				// adding a filter 
+				.addFilter(new JwtUsernameAndPasswordAuthenticationFilter())
 				.authorizeRequests()
 				.antMatchers("/", "index", "/css/*", "/js/*")
 				.permitAll()
@@ -66,15 +74,16 @@ public class ApplicationSecurityConfig extends WebSecurityConfigurerAdapter {
 				.and()
 				.rememberMe() // defaults to 2 weeks
 				.tokenValiditySeconds((int) TimeUnit.DAYS.toSeconds(21))
-				.key("somethingverysecured")
-				.and()
-				.logout()
-					.logoutUrl("/logout")
-					.logoutRequestMatcher(new AntPathRequestMatcher("/logout", "GET"))
-					.clearAuthentication(true)
-					.invalidateHttpSession(true)
-					.deleteCookies("JSESSIONID", "remember-me")
-					.logoutSuccessUrl("/login");
+				.key("somethingverysecured");
+				
+				// form based authentication
+//				.logout()
+//					.logoutUrl("/logout")
+//					.logoutRequestMatcher(new AntPathRequestMatcher("/logout", "GET"))
+//					.clearAuthentication(true)
+//					.invalidateHttpSession(true)
+//					.deleteCookies("JSESSIONID", "remember-me")
+//					.logoutSuccessUrl("/login");
 		
 		
 	}

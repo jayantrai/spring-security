@@ -24,7 +24,10 @@ import io.jsonwebtoken.security.Keys;
 
 public class JwtUsernameAndPasswordAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 	
-	private final AuthenticationManager authenticationManager = null;
+	private final AuthenticationManager authenticationManager;
+	
+	
+
 
 	@Override
 	public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
